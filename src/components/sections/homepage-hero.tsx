@@ -2,36 +2,35 @@ import React from "react";
 import { Hero, HeroTitle, HeroSubtitle } from "@/components/hero";
 import Container from "@/components/contianer";
 import Image from "next/image";
-import Button from "@/components/button";
-import { ChevronRight } from "../icons";
+import Button, { HighLight } from "@/components/button";
+import { ChevronRight } from "@/components/icons";
 
 const HomePageHero = () => {
   return (
-    <Container className="flex flex-col justify-center pt-[6.4rem] mt-navigation-height">
+    <Container className="mt-navigation-height flex flex-col justify-center pt-[6.4rem]">
       <Hero>
         <Button size="sm" variant="secondary">
-          <span>
-            <a href="#">Linear 2022 Release – Built for scale</a>
-          </span>
-          <span className="highlight">→</span>
+          <span>Linear 2022 Release – Built for scale</span>
+          <HighLight>→</HighLight>
         </Button>
         <HeroTitle>
-          Linear is a better way <br /> to build products
+          Linear is a better way <br className="hidden md:block" /> to build
+          products
         </HeroTitle>
         <HeroSubtitle>
-          Meet the new standart for modern software development. <br />
+          Meet the new standart for modern software development.{" "}
+          <br className="hidden md:block" />
           Streamline issues, sprints, and product roadmaps.
         </HeroSubtitle>
         <Button size="lg">
-          <span>
-            <a href="#">Get Started</a>
-          </span>
-          <span className="highlight">
+          <span>Get Started</span>
+          <HighLight>
             <ChevronRight />
-          </span>
+          </HighLight>
         </Button>
       </Hero>
-      <div className="aspect-video relative w-full mt-[12.8rem]">
+      {/* Hero Image */}
+      <div className="relative -z-10 mt-[12.8rem] aspect-video w-full">
         <Image
           src="/hero.webp"
           alt="Hero"

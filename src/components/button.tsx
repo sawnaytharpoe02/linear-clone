@@ -1,6 +1,7 @@
 import React from "react";
 import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/utils";
+import Link from "next/link";
 
 const buttonVariant = cva(
   "rounded-full transition duration-150 hover:ease-in inline-flex items-center",
@@ -30,15 +31,46 @@ const buttonVariant = cva(
   }
 );
 
-interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariant> {
-  children: React.ReactNode;
+export const HighLight = ({ children }: { children: React.ReactNode }) => {
+  return <span className="highlight">{children}</span>;
+};
+
+interface ButtonAsButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: never;
 }
 
-const Button = ({ children, className, variant, size }: ButtonProps) => {
+interface ButtonAsAnchorProps
+  extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+  href: string;
+}
+
+type ButtonBaseProps = VariantProps<typeof buttonVariant> & {
+  children: React.ReactNode;
+};
+
+type ButtonProps = ButtonBaseProps &
+  (ButtonAsButtonProps | ButtonAsAnchorProps);
+
+const Button = ({
+  children,
+  className,
+  variant,
+  size,
+  ...props
+}: ButtonProps) => {
+  const classes = cn(buttonVariant({ variant, size, className }));
+
+  if ("href" in props && props.href !== undefined) {
+    return (
+      <Link {...props} className={classes}>
+        {children}
+      </Link>
+    );
+  }
+
   return (
-    <button className={cn(buttonVariant({ variant, size, className }))}>
+    <button {...props} className={classes}>
       {children}
     </button>
   );
